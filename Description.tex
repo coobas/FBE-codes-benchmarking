@@ -3,5 +3,59 @@
 \section{Description} % (fold)
 \label{sec:description}
 
+A set of benchmarking tasks has been assebled in order to rigorously verify free-boundary equilibrium (FBE) codes. Please note that validation in terms of comparisons of experimental data to simulations is not a subject of this benchmarking. Before we specify individual benchmarks, we must define the inputs and outputs of FBE codes. This is a non-trivial task as inputs include, besides plasma profiles, a complete description of the poloidal field system of the simulated tokamak. We will use the EU-ITM CPO (consisten physical object) definitions to describe the inputs and outputs.
 
+The Grad-Shafranov equation, which expresses the force balance in an axisymmetric tokamak, is a non-linear elliptic partial defferential equation:
+\begin{equation}
+\label{eq:gs}
+% MathType!MTEF!2!1!+-
+% feaagKart1ev2aaatCvAUfKttLearuqr1ngBPrgarmqr1ngBPrgitL
+% xBI9gBamXvP5wqSXMqHnxAJn0BKvguHDwzZbqegm0B1jxALjhiov2D
+% aeHbuLwBLnhiov2DGi1BTfMBaebbfv3ySLgzGueE0jxyaibaiKc9yr
+% Vq0xXdbba91rFfpec8Eeeu0xXdbba9frFj0-OqFfea0dXdd9vqaq-J
+% frVkFHe9pgea0dXdar-Jb9hs0dXdbPYxe9vr0-vr0-vqpWqaaeaabi
+% GaciaacaqabeaadaabauaaaOqaaiabgs5aenaaCaaaleqabaGaeiOk
+% aOcaaOGaeqiYdK3aaeWaaeaacqWGsbGucqGGSaalcqWGAbGwaiaawI
+% cacaGLPaaacqGH9aqpcqWGsbGudaWcaaqaaiabgkGi2cqaaiabgkGi
+% 2kabdkfasbaadaqadaqaamaalaaabaGaeGymaedabaGaemOuaifaam
+% aalaaabaGaeyOaIyRaeqiYdKhabaGaeyOaIyRaemOuaifaaaGaayjk
+% aiaawMcaaiabgUcaRmaalaaabaGaeyOaIy7aaWbaaSqabeaacqaIYa
+% GmaaGccqaHipqEaeaacqGHciITcqWGAbGwdaahaaWcbeqaaiabikda
+% YaaaaaGccqGH9aqpcqGHsislcqaH8oqBdaWgaaWcbaGaeGimaadabe
+% aakiabdkfasjabdQgaQnaaBaaaleaacqaHvpGzaeqaaaaa!6C5C!
+{\Delta ^*}\psi \left( {R,Z} \right) = R\frac{\partial }{{\partial R}}\left( {\frac{1}{R}\frac{{\partial \psi }}{{\partial R}}} \right) + \frac{{{\partial ^2}\psi }}{{\partial {Z^2}}} =  - {\mu _0}R{j_\phi }.
+\end{equation}
+In the plasma region with closed magnetic flux surfaces, the toroidal current desity $j_\phi$ reads
+\begin{equation}
+\label{eq:jplasma}
+% MathType!MTEF!2!1!+-
+% feaagKart1ev2aaatCvAUfKttLearuqr1ngBPrgarmqr1ngBPrgitL
+% xBI9gBamXvP5wqSXMqHnxAJn0BKvguHDwzZbqegm0B1jxALjhiov2D
+% aeHbuLwBLnhiov2DGi1BTfMBaebbfv3ySLgzGueE0jxyaibaiKc9yr
+% Vq0xXdbba91rFfpec8Eeeu0xXdbba9frFj0-OqFfea0dXdd9vqaq-J
+% frVkFHe9pgea0dXdar-Jb9hs0dXdbPYxe9vr0-vr0-vqpWqaaeaabi
+% GaciaacaqabeaadaabauaaaOqaaiabdQgaQnaaBaaaleaacqaHvpGz
+% aeqaaOGaeyypa0JaemOuaiLafmiCaaNbauaacqGHRaWkdaWcaaqaai
+% abigdaXaqaaiabeY7aTnaaBaaaleaacqaIWaamaeqaaOGaemOuaifa
+% aiabdAeagjqbdAeagzaafaaaaa!5034!
+{j_\phi } = Rp' + \frac{1}{{{\mu _0}R}}FF'.
+\end{equation}
+In the equations above, $\psi \left( {R,Z} \right)$ is the poloidal magnetic flux, $R,Z$ are Cartesian coordinates in the poloidal plane (i.e. components of the usual $R, \phi , Z$ cylinrical coordinate system), $\mu_0$ is the vacuum permeability, $p\left(\psi\right)$ is the plasma pressure and $F\left(\psi\right) = RB_\phi$ is a poloidal current flux function.
+Prime denotes ${\rm{d}}/{{\rm{d}}\psi}$. As $\psi$ is the quatity to be solved for, the input of an FBE code is the toroidal current profile. In the plasma region, where eq. \ref{eq:jplasma} holds, the $p\left(\psi\right)$ and $F\left(\psi\right)$ profiles must be input. However, nor the plasma boundary nor the $\psi$ on the axis and on the boundary is a priori known so that the profiles can only be specified on a normalized $\psi$:
+\begin{equation}
+% MathType!MTEF!2!1!+-
+% feaagKart1ev2aaatCvAUfKttLearuqr1ngBPrgarmqr1ngBPrgitL
+% xBI9gBamXvP5wqSXMqHnxAJn0BKvguHDwzZbqegm0B1jxALjhiov2D
+% aeHbuLwBLnhiov2DGi1BTfMBaebbfv3ySLgzGueE0jxyaibaiKc9yr
+% Vq0xXdbba91rFfpec8Eeeu0xXdbba9frFj0-OqFfea0dXdd9vqaq-J
+% frVkFHe9pgea0dXdar-Jb9hs0dXdbPYxe9vr0-vr0-vqpWqaaeaabi
+% GaciaacaqabeaadaabauaaaOqaaiqbeI8a5zaaraGaeyypa0ZaaSaa
+% aeaacqaHipqEcqGHsislcqaHipqEdaWgaaWcbaGaeeyyaegabeaaaO
+% qaaiabeI8a5naaBaaaleaacqqGIbGyaeqaaOGaeyOeI0IaeqiYdK3a
+% aSbaaSqaaiabbggaHbqabaaaaaaa!5195!
+\bar \psi  = \frac{{\psi  - {\psi _{\rm{a}}}}}{{{\psi _{\rm{b}}} - {\psi _{\rm{a}}}}},
+\end{equation}
+where $\psi _{\rm{a,b}}$ refer to values on the magnetic axis and the plasma boundary (the last closed flux surface), respectively.
+
+FBE codes also need to know the toroidal current density in all conducting elements. Most importantly, the currents in the poloidal field coils and in the vessel must be taken into account. In a static case, these currents must be input. It is natural to assume homogeneous current densities in PF coils so that the total currents in these coils are specified. For the vessel and other cunducting elements, the current density shall be specified using an appropriate mesh.
 % section description (end)
