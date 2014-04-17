@@ -25,7 +25,7 @@ The Grad-Shafranov equation, which expresses the force balance in an axisymmetri
 % aakiabdkfasjabdQgaQnaaBaaaleaacqaHvpGzaeqaaaaa!6C5C!
 {\Delta ^*}\psi \left( {R,Z} \right) = R\frac{\partial }{{\partial R}}\left( {\frac{1}{R}\frac{{\partial \psi }}{{\partial R}}} \right) + \frac{{{\partial ^2}\psi }}{{\partial {Z^2}}} =  - {\mu _0}R{j_\phi }.
 \end{equation}
-In the plasma region with closed magnetic flux surfaces, the toroidal current desity $j_\phi$ reads
+In the plasma region with closed magnetic flux surfaces, the toroidal current desity $j_\phi$ can be expressed as
 \begin{equation}
 \label{eq:jplasma}
 % MathType!MTEF!2!1!+-
@@ -57,5 +57,7 @@ Prime denotes ${\rm{d}}/{{\rm{d}}\psi}$. As $\psi$ is the quatity to be solved f
 \end{equation}
 where $\psi _{\rm{a,b}}$ refer to values on the magnetic axis and the plasma boundary (the last closed flux surface), respectively.
 
-FBE codes also need to know the toroidal current density in all conducting elements. Most importantly, the currents in the poloidal field coils and in the vessel must be taken into account. In a static case, these currents must be input. It is natural to assume homogeneous current densities in PF coils so that the total currents in these coils are specified. For the vessel and other cunducting elements, the current density shall be specified using an appropriate mesh.
+FBE codes also need to know the toroidal current density in all conducting elements. Most importantly, the currents in the poloidal field coils and in the vessel must be taken into account. In a static case, these currents must be input. It is natural to assume homogeneous current densities in PF coils so that the total currents in these coils are specified. For the vessel and other cunducting elements, the current density shall be specified using an appropriate mesh. For dynamic (time dependent) simulations, the most natural is to input the extenally applied voltages on the PF coils. The FBE codes must then calculate additional electromotive forces induced by all elements. Certain codes, for example FREEBIE, can alternatively input the coil currents.
+
+In the following, we describe the proposed benchmark tasks in detail. The input and output quantities are specified using CPO's, which are themselves described in \ref{sec:cpo}.
 % section description (end)
