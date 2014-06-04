@@ -1,9 +1,12 @@
 %!TEX root = fbe_codes_benchmarking.tex
 
-\section{Description} % (fold)
+\section{Description of the benchamark} % (fold)
 \label{sec:description}
 
-A set of benchmarking tasks has been assebled in order to rigorously verify free-boundary equilibrium (FBE) codes. Please note that validation in terms of comparisons of experimental data to simulations is not a subject of this benchmarking. Before we specify individual benchmarks, we must define the inputs and outputs of FBE codes. This is a non-trivial task as inputs include, besides plasma profiles, a complete description of the poloidal field system of the simulated tokamak. We will use the EU-ITM CPO (consisten physical object) definitions to describe the inputs and outputs.
+\subsection{Theoretical background} % (fold)
+\label{ssub:theoretical_background}
+
+A set of benchmarking tasks has been assebled in order to rigorously verify free-boundary equilibrium (FBE) codes. Please note that validation in terms of comparisons of experimental data to simulations is not a subject of this benchmarking. Before we specify individual benchmarks, we must define the inputs and outputs of FBE codes. This is a non-trivial task as inputs include, besides plasma profiles, a complete description of the poloidal field system of the simulated tokamak. 
 
 The Grad-Shafranov equation, which expresses the force balance in an axisymmetric tokamak, is a non-linear elliptic partial defferential equation:
 \begin{equation}
@@ -41,7 +44,7 @@ In the plasma region with closed magnetic flux surfaces, the toroidal current de
 {j_\phi } = Rp' + \frac{1}{{{\mu _0}R}}FF'.
 \end{equation}
 In the equations above, $\psi \left( {R,Z} \right)$ is the poloidal magnetic flux, $R,Z$ are Cartesian coordinates in the poloidal plane (i.e. components of the usual $R, \phi , Z$ cylinrical coordinate system), $\mu_0$ is the vacuum permeability, $p\left(\psi\right)$ is the plasma pressure and $F\left(\psi\right) = RB_\phi$ is a poloidal current flux function.
-Prime denotes ${\rm{d}}/{{\rm{d}}\psi}$. As $\psi$ is the quatity to be solved for, the input of an FBE code is the toroidal current profile. In the plasma region, where eq. \ref{eq:jplasma} holds, the $p\left(\psi\right)$ and $F\left(\psi\right)$ profiles must be input. However, nor the plasma boundary nor the $\psi$ on the axis and on the boundary is a priori known so that the profiles can only be specified on a normalized $\psi$:
+Prime denotes ${\rm{d}}/{{\rm{d}}\psi}$. As $\psi$ is the quatity to be solved for, the input of an FBE code is the toroidal current profile. In the plasma region, where eq. \ref{eq:jplasma} holds, the $p\left(\psi\right)$ and $F\left(\psi\right)$ profiles must be input. However, nor the plasma boundary $R,Z$ coordinates nor the $\psi$ on the axis and on the boundary are a priori known so that the profiles can only be specified on a normalized $\psi$:
 \begin{equation}
 % MathType!MTEF!2!1!+-
 % feaagKart1ev2aaatCvAUfKttLearuqr1ngBPrgarmqr1ngBPrgitL
@@ -59,5 +62,49 @@ where $\psi _{\rm{a,b}}$ refer to values on the magnetic axis and the plasma bou
 
 FBE codes also need to know the toroidal current density in all conducting elements. Most importantly, the currents in the poloidal field coils and in the vessel must be taken into account. In a static case, these currents must be input. It is natural to assume homogeneous current densities in PF coils so that the total currents in these coils are specified. For the vessel and other cunducting elements, the current density shall be specified using an appropriate mesh. For dynamic (time dependent) simulations, the most natural is to input the extenally applied voltages on the PF coils. The FBE codes must then calculate additional electromotive forces induced by all elements. Certain codes, for example FREEBIE, can alternatively input the coil currents.
 
-In the following, we describe the proposed benchmark tasks in detail. The input and output quantities are specified using CPO's, which are themselves described in \ref{sec:cpo}.
+% subsection theoretical_background (end)
+
+\subsection{Individual benchmark tasks} % (fold)
+\label{ssub:individual_benchmark_tasks}
+
+In the following, we describe the proposed benchmark tasks in detail. The input and output quantities are specified using EU-ITM CPO (consisten physical object) structures. If necessary, additional fields are added to CPO's, for example when quantitities are not present in the CPO. These data structures are described in \ref{sec:cpo}.
+
+\subsubsection{Equilibrium stand-alone}
+\begin{enumerate}
+	\item Vacuum description---response of passive and active PF structures to prescribed voltage waveforms.
+	\item Static equilibrium---prescribed $p'$, $FF'$ and PF coil currents.
+	\begin{enumerate}
+		\item Circular, low current plasma plasma
+		\item Elliptical limited, medium current plasma
+		\item Diverted flat-top plasma with pedestal
+	\end{enumerate}
+	\item Open loop evolution---zero or prescribed voltage waveforms, prescribed $p'$ and $FF'$.
+	\begin{enumerate}
+		\item Check vertical stability of circular plasma
+		\item VDE growth rates of elongated plasmas
+	\end{enumerate}
+	\item Closed loop evolution with a simple (proportional if possible) controller, prescribed $p'$ and $FF'$.
+	\begin{enumerate}
+		\item Position control only.
+		\item Plasma current and position control.
+	\end{enumerate}
+\end{enumerate}
+
+\subsubsection{Equilibrium stand-alone}
+\begin{enumerate}
+	\item Open loop simulations with current diffusion.
+	\begin{enumerate}
+		\item Artificially low resistivity, i.e. almost no current diffusion.
+		\item Properly calculated plasma resistivity.
+	\end{enumerate}
+	\item Closed loop simulations.
+	\item Transient events
+	\begin{enumerate}
+		\item Disruptions
+		\item L-H/H-L transitions
+	\end{enumerate}
+\end{enumerate}
+
+% subsection individual_benchmark_tasks (end)
+
 % section description (end)
